@@ -8,9 +8,6 @@ class my_LogRegression():
         self.learnr = 0.1
         self.threshhold = 0.5
 
-
-
-
     def Sigmoid(self, alpha):
         return 1.0/ (1 + np.exp(-alpha))
 
@@ -19,12 +16,13 @@ class my_LogRegression():
         Xp = np.c_[np.ones((X.shape[0],1)),X]
         self.beta_ = np.zeros(Xp.shape[1])
 
-        for i in range(self.iterations):
+        count = 0
+        while count < self.iterations:
             grad_beta = (Xp.T @ (self.Sigmoid(Xp @ self.beta_) - y))/m
             self.beta_ -= self.learnr * grad_beta
 
             if np.linalg.norm(grad_beta) < self.epsilon:
-                break
+                count = self.iterations
 
     def Predict_probas(self, X):
         Xp = np.c_[np.ones((X.shape[0],1)),X]
